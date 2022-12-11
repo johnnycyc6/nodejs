@@ -2,12 +2,12 @@ const fs = require('fs');
 
 
 let p = (fileName) => {
-    let toreadFile = new Promise((resolve, reject) => {
+    let toreadFile = new Promise((reject, resolve) => {
        fs.readFile(fileName, "utf-8", (err, data) => {
         if(err) {
-            reject('出錯了', err);
+            resolve(err);
         }else{
-            resolve(`成功讀到資料:, ${data}`);
+            reject(`成功讀到資料:, ${data}`);
         }
        });
     });
