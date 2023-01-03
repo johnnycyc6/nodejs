@@ -66,6 +66,23 @@ app.get('/api/stocks/:stockId', async (req, res, next) => {
   let [data] = await pool.query('SELECT * FROM stock_prices WHERE stock_id=?', [req.params.stockId]);
   res.json(data);
 });
+
+
+app.post('/api/stocks', (req, res) => {
+  console.log('POST/api/stocks', req.body);
+  const q = "INSERT stock_mfee INTO stocks (`id`,`name`) VALUES (?)"
+  const values = [
+    res.body.id,
+    res.body.name,
+  ]
+
+  pool.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+    return res.json("stock新增成功")
+  })
+
+  res.json({});
+})
 // app.use((req, res, next) => {
 //   console.log('這裡是的一個中間件 C');
 //   next();

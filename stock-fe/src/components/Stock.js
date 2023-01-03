@@ -28,17 +28,34 @@ const Stock = () => {
     console.log('第二個參數是counter');
   }, [counter]);
 
-  const [stockId, setStockId] = useState('');
-  const [stockName, setStockName] = useState('');
-  
-  async function handleSubmit(e) {
-    e.preventDefault();
-    let response =await axios.post('http://localhost:3001/api/stocks', {
-      stockId,
-      stockName,
-    });
-    console.log(response.data);
+  const [newstock, setNewstcok] = useState({
+    id: '',
+    name: '',
+  })
+
+  // const nav
+ 
+  const handleChange = (e) => {
+    setNewstcok((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleClick = async e =>{
+    e.preventDefault()
+    try{
+      await axios.post('http://localhost:3001/api/stocks', newstock)
+    }catch(err){
+
+    }
   }
+  // console.log(newstock)
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   let response =await axios.post('http://localhost:3001/api/stocks', newstock);
+  //   console.log(response.data);
+  // }
 
   return (
     <div>
@@ -63,15 +80,15 @@ const Stock = () => {
           <label htmlFor="name" className="flex mb-2 w-32">
             股票代碼
           </label>
-          <input className="w-full border-2 border-purple-200 rounded-md h-10 focus:outline-none focus:border-purple-400 px-2" type="text" id="stockId" name="stockId" />
+          <input className="w-full border-2 border-purple-200 rounded-md h-10 focus:outline-none focus:border-purple-400 px-2" type="number" id="stockId" name="id" onChange={handleChange}/>
         </div>
         <div className="mb-8 text-2xl">
           <label htmlFor="password" className="flex mb-2 w-32">
             股票名稱
           </label>
-          <input className="w-full border-2 border-purple-200 rounded-md h-10 focus:outline-none focus:border-purple-400 px-2" type="text" id="stockName" name="stockName" />
+          <input className="w-full border-2 border-purple-200 rounded-md h-10 focus:outline-none focus:border-purple-400 px-2" type="text" id="stockName" name="name" onChange={handleChange}/>
         </div>
-        <button className="text-xl bg-indigo-300 px-4 py-2.5 rounded hover:bg-indigo-400 transition duration-200 ease-in" onClick={handleSubmit}>
+        <button className="text-xl bg-indigo-300 px-4 py-2.5 rounded hover:bg-indigo-400 transition duration-200 ease-in" onClick={handleClick}>
           新增
         </button>
       </form>
