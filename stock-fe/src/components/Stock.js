@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -33,7 +33,7 @@ const Stock = () => {
     name: '',
   })
 
-  // const nav
+  const navigate = useNavigate()
  
   const handleChange = (e) => {
     setNewstcok((prev) => ({
@@ -42,12 +42,14 @@ const Stock = () => {
     }));
   };
 
-  const handleClick = async e =>{
+  const handleClick = async (e) =>{
     e.preventDefault()
     try{
       await axios.post('http://localhost:3001/api/stocks', newstock)
+      navigate("/")
+      
     }catch(err){
-
+      console.log(err)
     }
   }
   // console.log(newstock)
